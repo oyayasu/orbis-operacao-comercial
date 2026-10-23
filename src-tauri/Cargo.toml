@@ -1,6 +1,6 @@
 [package]
 name = "orbis-operacao-comercial"
-version = "0.1.0"
+version = "0.1.1"
 description = "Simulador offline de operação comercial fictícia"
 authors = ["Orbis Simulador"]
 edition = "2021"
