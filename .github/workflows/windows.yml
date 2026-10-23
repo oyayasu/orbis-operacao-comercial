@@ -16,6 +16,8 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Check JavaScript syntax
+        run: node --check main.js
       - name: Build web interface
         run: npm run build
       - name: Build Windows NSIS installer
