@@ -1,32 +1,26 @@
 name: Build Windows
-
 on:
   workflow_dispatch:
   push:
     branches: [main]
-
 permissions:
   contents: read
-
 jobs:
   windows:
     runs-on: windows-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Node.js 22
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Rust stable
-        uses: dtolnay/rust-toolchain@stable
-      - name: Instalar dependências
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install dependencies
         run: npm install --no-audit --no-fund
-      - name: Compilar frontend
+      - name: Build web interface
         run: npm run build
-      - name: Compilar instalador Windows
+      - name: Build Windows NSIS installer
         run: npx tauri build --bundles nsis
-      - name: Publicar instalador
+      - name: Upload installer
         uses: actions/upload-artifact@v4
         with:
           name: Orbis-Windows-Installer

@@ -1,38 +1,40 @@
-# Orbis — Operação Comercial
+# Orbis — Operação Comercial v0.2.0
 
-Simulador **fictício e offline** de telemarketing ativo, com campanhas de vendas para pessoa física (PF) e pessoa jurídica (PJ).
+Aplicativo desktop de treinamento em vendas ativas (PF e PJ). Funciona localmente, sem telefonia externa, sem clientes reais e sem serviços pagos.
 
 ## Entrar
-- Informe qualquer nome de exibição: ele aparece no painel, e pode ser alterado em **Meu perfil**.
-- A matrícula fictícia inicial é **OP-1042**.
-- Senha demonstrativa: **123456** (não é autenticação real).
 
-## Funcionalidades da versão 0.1
-- Discador simulado e campanhas PF/PJ;
-- Estados do operador, chamadas, pausas e resultados;
-- CRM: mailing, histórico, notas e bloqueio de contato;
-- Portal comercial: produtos fictícios, descontos e propostas;
-- Relatórios CSV, backup JSON e persistência local.
+Informe seu nome, matrícula `OP-1042` e senha inicial `123456`. Esta é uma senha local de demonstração, **não um mecanismo de segurança**. O nome pode ser atualizado em Meu perfil.
 
-Nenhum número é discado de verdade. Não use cadastros reais ou dados sensíveis. O simulador usa `localStorage`.
+## Novos recursos
 
-## Testar sem instalar
-Abra [demo.html](demo.html) em um navegador atualizado. Tudo funciona localmente.
+- Discador progressivo de treinamento: seleção, discagem, resposta, conversa representada por texto, resultado e pós-atendimento (TPA), com distribuição contínua enquanto o operador estiver disponível.
+- Mailing inicial com 72 contatos; recebe **18 a 32 novos registros por dia útil** nas configurações padrão. Configurável de 1 a 200; dias sem abrir são repostos no máximo por 5 dias úteis. Não faz trabalho em segundo plano com o app fechado.
+- CRM de clientes PF/PJ com código de cliente, telefone parcialmente oculto, CPF/CNPJ ocultos, região, histórico, responsável, origem, interesse, registros de negócio e anotações.
+- Metas, descontos, preços dos produtos, probabilidade de atendimento, intervalo entre chamadas e tempo de TPA personalizáveis.
+- Relógio em tempo real, tempo conectado, cronômetro de ligação e pausas.
+- Propostas, aprovações, cancelamentos, relatórios CSV e backup JSON.
 
-## Executar o projeto
-Instale Node.js 22+ e, no diretório do repositório, execute:
+## Origem dos dados
+
+Banco de perfis gerado offline com [Python Faker](https://faker.readthedocs.io/en/master/locales/pt_BR.html), localização brasileira. O banco é distribuído em `data/profiles.json`; nenhum cadastro é obtido de pessoas reais. CPF/CNPJ e telefones são deliberadamente mascarados, e e-mails usam o domínio `example.com`, reservado para exemplos.
+
+## Executar
+
+Para usar sem instalar, abra `demo.html` em um navegador atualizado. Para desenvolvimento, Node.js 22+ e Rust com toolchain do Tauri 2:
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Compilar para Windows 10
-O workflow em **Actions → Build Windows** tenta compilar um instalador Tauri 2/NSIS em Windows. Também é executado após push na branch `main`.
+## Windows 10
 
-Quando a execução terminar com sucesso, abra o workflow e baixe o artefato **Orbis-Windows-Installer**, contendo o arquivo de instalação `.exe`.
+No GitHub: **Actions → Build Windows → Run workflow**. Se a execução concluir com sucesso, baixe o artefato `Orbis-Windows-Installer` (NSIS `.exe`). O workflow também dispara automaticamente após alterações na branch main.
 
-A compilação exige dependências Rust, MSVC e WebView2 no ambiente de build, preparadas pelo runner Windows do GitHub Actions. O aplicativo ainda **não** foi validado em todas as versões do Windows 10.
+## Limitações
 
-## Escopo
-A versão atual não possui telefonia SIP/VoIP real, transcrição de voz nem cliente com IA. Dados, produtos e históricos são fictícios.
+- O discador **simula** tentativas e atendimentos em software; não disca números reais, não faz áudio SIP/VoIP e não conversa com IA.
+- As taxas de atendimento e os tempos são ajustáveis e não se propõem a representar médias oficiais de mercado.
+- Os clientes e empresas são gerados para testes. Dados ficam em localStorage; faça backup antes de limpar o navegador, reinstalar ou mudar o perfil do Windows.
+- Build/testes manuais em Windows dependem da execução do GitHub Actions e de validação posterior no computador.
